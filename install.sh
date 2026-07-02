@@ -1,9 +1,12 @@
 #!/data/data/com.termux/files/usr/bin/sh
 
+clear
+
 echo "=================================="
-echo "   Verus Miner Installer"
-echo "   by muflikhudin"
+echo "     VERUS TERMUX INSTALLER"
+echo "        by muflikhudin"
 echo "=================================="
+echo
 
 pkg update -y
 pkg install wget libjansson -y
@@ -18,7 +21,5 @@ wget -O start.sh https://raw.githubusercontent.com/muflikhudin/verus-termux/main
 chmod +x ccminer
 chmod +x start.sh
 
-echo ""
-echo "Instalasi selesai."
-echo "Jalankan miner dengan:"
-echo "cd ~/ccminer && ./start.sh"
+echo
+read -p "Masukkan Wallet Verus Anda: " WALLET
