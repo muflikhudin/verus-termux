@@ -1,7 +1,2 @@
-#!/data/data/com.termux/files/usr/bin/sh
-
-termux-wake-lock
-
-cd ~/ccminer
-
-./ccminer -c config.json
+#!/bin/sh
+~/ccminer/ccminer -c ~/ccminer/config.json
