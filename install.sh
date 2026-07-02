@@ -2,11 +2,22 @@
 
 clear
 
-echo "=================================="
-echo "     VERUS TERMUX INSTALLER"
-echo "        by muflikhudin"
-echo "=================================="
+clear
+
+echo "========================================="
+echo "        VERUS TERMUX INSTALLER"
+echo "========================================="
+echo "             by muflikhudin"
+echo "========================================="
 echo
+echo "Selamat datang di Verus Termux Installer."
+echo "Installer ini GRATIS digunakan."
+echo
+echo "Jika installer ini bermanfaat,"
+echo "Anda dapat mendukung pengembangan proyek"
+echo "dengan mengaktifkan DONASI."
+echo
+read -p "Aktifkan donasi untuk mendukung proyek? (Y/n): " DONASI
 
 pkg update -y
 pkg install wget libjansson -y
