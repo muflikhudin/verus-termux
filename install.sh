@@ -36,9 +36,17 @@ fi
 echo
 read -p "Masukkan wallet Verus Anda: " WALLET
 read -p "Masukkan nama worker: " WORKER
+# === DETEKSI CORE OTOMATIS (DIKURANGI 1) ===
+TOTAL_CORE=$(nproc)
+if [ "$TOTAL_CORE" -gt 2 ]; then
+    THREADS=$((TOTAL_CORE - 1))
+else
+    THREADS=$TOTAL_CORE
+fi
+# ===========================================
 
 echo
-echo "Menyiapkan instalasi..."
+echo "Menyiapkan instalasi dengan ${THREADS} core..."
 sleep 2
 
 pkg update -y
