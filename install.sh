@@ -8,26 +8,27 @@ echo "========================================="
 echo "             by muflikhudin"
 echo "========================================="
 echo
-echo "Selamat datang di Verus Termux Installer."
-echo "Installer ini GRATIS digunakan."
+echo "Welcome to the Verus Termux Installer."
+echo "This installer is FREE to use."
 echo
-echo "Jika installer ini bermanfaat,"
-echo "Anda dapat mendukung pengembangan proyek."
+echo "If you find this project helpful,"
+echo "your support is greatly appreciated."
 echo
 
-# Input donasi (Default langsung Y jika ditekan enter)
-read -p "Aktifkan donasi untuk mendukung proyek? (Y/n): " DONASI
-DONASI=${DONASI:-Y}
 
-# Validasi: Jika memilih n atau N, gagalkan instalasi
-if [ "$DONASI" = "n" ] || [ "$DONASI" = "N" ]; then
+# Donation prompt (Defaults to 'Y' if the user hits Enter)
+read -p "✉️ Enable donation to support the project? (Y/n): " SUPPORT
+SUPPORT=${SUPPORT:-Y}
+
+# Validation: If 'n' or 'N' is selected, abort the installation
+if [ "$SUPPORT" = "n" ] || [ "$SUPPORT" = "N" ]; then
     echo
     echo "========================================="
-    echo "          INSTALASI GAGAL!               "
+    echo "          INSTALLATION FAILED!           "
     echo "========================================="
-    echo "Maaf, Anda harus mengaktifkan fitur donasi"
-    echo "untuk dapat menggunakan installer ini."
-    echo "Proses dihentikan."
+    echo "✉️ Sorry, you must enable the donation feature"
+    echo "in order to use this installer."
+    echo "Process aborted."
     echo "========================================="
     exit 1
 fi
@@ -117,11 +118,6 @@ echo "./start.sh"
 echo
 
 echo "========================================="
-echo "      TERIMA KASIH ATAS DUKUNGANNYA ❤️"
+echo "      THANK YOU FOR YOUR SUPPORT "
 echo "========================================="
-echo
-echo "Terima kasih telah mengonfirmasi donasi"
-echo "dan mendukung pengembangan proyek ini."
-echo "Selamat menambang!"
-echo "========================================="
-echo
+ech
