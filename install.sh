@@ -5,7 +5,7 @@ clear
 echo "========================================="
 echo "        VERUS TERMUX INSTALLER"
 echo "========================================="
-echo "             by muflikhudin"
+echo "             oppo-seventh"
 echo "========================================="
 echo
 echo "Welcome to the Verus Termux Installer."
