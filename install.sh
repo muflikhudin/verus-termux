@@ -85,7 +85,7 @@ cat > start.sh <<EOF
 while true
 do
     echo "========================================="
-    echo " Memulai mining Verus Coin...            "
+    echo " Starting 📩 mining...            "
     echo "========================================="
     # Membaca wallet pengguna dari config.json yang sudah dibuat permanen
     ./ccminer -c config.json &
